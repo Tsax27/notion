@@ -75,58 +75,62 @@
       </section>
     </body>
     <script>
-      function beep() {
-          var snd = new Audio("bell.mp3");  
-          snd.play();
-      }
-      var timer;
+        var timer;
 
-      function start(){
-          var inHrs = document.getElementById("inHrs").value;
-          var inMins = document.getElementById("inMins").value;
-          var inSecs = document.getElementById("inSecs").value;
+        function beep() {
+            var snd = new Audio("bell.mp3");  
+            snd.play();
+        }
 
-          hours = parseInt(inHrs)
-          minute = parseInt(inMins)
-          seconds1 = parseInt(inSecs)
-          if( isNaN(hours)){
-            hours = 0
-          }
-          if( isNaN(minute)){
-            minute = 0
-          }
-          if( isNaN(seconds1)){
-            seconds1 = 0
-          }
-          secondsCounter = hours*60*60 + minute*60 + seconds1
+        function start(){
+            var inHrs = document.getElementById("inHrs").value;
+            var inMins = document.getElementById("inMins").value;
+            var inSecs = document.getElementById("inSecs").value;
 
-          if(secondsCounter==0){
-            return;
-          }
+            hours = parseIntCheck4Nan(inHrs);
+            minute = parseIntCheck4Nan(inMins);
+            seconds1 = parseIntCheck4Nan(inSecs);
 
-          document.getElementById("btnStart").disabled = true;                  // Stop user from double clicking the button
-          var display = document.getElementById("display");
+            secondsCounter = hours*60*60 + minute*60 + seconds1
 
-          timer = setInterval(function(){
-                  secondsCounter--;
+            if(secondsCounter==0){
+                return;
+            }
 
-              var displayTime = new Date(secondsCounter * 1000).toISOString().slice(11,19);
-                  display.innerHTML = displayTime;
+            document.getElementById("btnStart").disabled = true;                  // Stop user from double clicking the button
+            var display = document.getElementById("display");
+            
+            // Call count down routine
+            timer = setInterval(countDown, 1000)
 
-                  if(secondsCounter == 0){
-                      beep();
-                      document.getElementById("btnStart").disabled = false;
-                      clearInterval(timer);
-                  }
-          }, 1000)
-
-      }
-
-      function cancel(){
-          clearInterval(timer)
-          display.innerHTML ='00:00:00'
-          document.getElementById("btnStart").disabled = false;
-      }
-
+        }
+        
+        function parseIntCheck4Nan(pInt){
+            var result = parseInt (pInt);
+            if(isNaN(result)){
+                result = 0;
+            }
+            return result;
+        }
+        
+        function countDown(){
+            secondsCounter--;
+            
+            var displayTime = new Date(secondsCounter * 1000).toISOString().slice(11,19);
+            display.innerHTML = displayTime;
+            
+            if(secondsCounter == 0){
+                beep();
+                document.getElementById("btnStart").disabled = false;
+                clearInterval(timer);
+            }
+        }
+        
+        function cancel(){
+            clearInterval(timer)
+            display.innerHTML ='00:00:00'
+            document.getElementById("btnStart").disabled = false;
+        }
+        
     </script>
 </html>
