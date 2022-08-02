@@ -1,80 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Timer</title>
 
-    <style>
-        body{
-          background-color: aliceblue;
-        }
-        .section {
-          background-color: aliceblue;
-          padding: 10px;
-          width: fit-content;
-        }
-        #display{
-          margin-bottom: 5px;
-            font-size: 30px;
-            font-family: monospace;
-            color: black;    /* darkturquoise */
-        }
-        .section input {
-          font-size: 10px;
-            color: #2D2D32;
-            text-align: center;
-            border: 1px solid gray;
-            width: 30px;
-            padding: 5px 1px;
-            margin-right: 4px;
-           display: inline-block;
-        }
-        .buttons {
-            display: flex;
-            flex-direction: row;
-        }
-        .buttons button {
-            margin-right: 4px;
-            padding: 5px 10px;
-            background-color: #d8d8d8;
-            border: 1px solid gray;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-            outline: none;
-            transition: 0.1s;
-        }
-        .buttons button:active {
-            box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12);
-        }
-        .buttons button:last-child {
-            margin-right: 0;
-        }
-        .buttons button:nth-child(4){
-            background-color: #8bc34a;
-        }
-        .buttons button:nth-child(5){
-            background-color: rgb(201, 89, 69);
-        }
-    </style>
-</head>
+        <style>
+            body{
+              background-color: aliceblue;
+            }
+            .section {
+              background-color: aliceblue;
+              padding: 10px;
+              width: fit-content;
+            }
+            #display{
+              margin-bottom: 5px;
+                font-size: 30px;
+                font-family: monospace;
+                color: black;    /* darkturquoise */
+            }
+            .section input {
+              font-size: 10px;
+                color: #2D2D32;
+                text-align: center;
+                border: 1px solid gray;
+                width: 30px;
+                padding: 5px 1px;
+                margin-right: 4px;
+               display: inline-block;
+            }
+            .buttons {
+                display: flex;
+                flex-direction: row;
+            }
+            .buttons button {
+                margin-right: 4px;
+                padding: 5px 10px;
+                background-color: #d8d8d8;
+                border: 1px solid gray;
+                color: white;
+                font-size: 15px;
+                cursor: pointer;
+                outline: none;
+                transition: 0.1s;
+            }
+            .buttons button:active {
+                box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12);
+            }
+            .buttons button:last-child {
+                margin-right: 0;
+            }
+            .buttons button:nth-child(4){
+                background-color: #8bc34a;
+            }
+            .buttons button:nth-child(5){
+                background-color: rgb(201, 89, 69);
+            }
+        </style>
+    </head>
+    <body>
+      <section class="section">
+        <div id="display">00:00:00</div>
 
-<body>
-  <section class="section">
-    <div id="display">00:00:00</div>
-  
-    <div class="buttons">
-      <input type="text" id="inHrs" name="inHrs" placeholder="hrs">
-      <input type="text" id="inMins" name="inMins" placeholder="mins">
-      <input type="text" id="inSecs" name="inSecs" placeholder="secs">
+        <div class="buttons">
+          <input type="text" id="inHrs" name="inHrs" placeholder="hrs">
+          <input type="text" id="inMins" name="inMins" placeholder="mins">
+          <input type="text" id="inSecs" name="inSecs" placeholder="secs">
 
-      <button id="btnStart" onclick="start()">▶</button>
-      <button id="btnCancel" onclick="cancel()">∎</button>
-    </div>
-    
-  </section>
-</body>
+          <button id="btnStart" onclick="start()">▶</button>
+          <button id="btnCancel" onclick="cancel()">∎</button>
+        </div>
+
+      </section>
+    </body>
     <script>
       function beep() {
           var snd = new Audio("bell.mp3");  
@@ -83,8 +82,6 @@
       var timer;
 
       function start(){
-          document.getElementById("btnStart").disabled = true;                  // Stop user from double clicking the button
-
           var inHrs = document.getElementById("inHrs").value;
           var inMins = document.getElementById("inMins").value;
           var inSecs = document.getElementById("inSecs").value;
@@ -107,18 +104,19 @@
             return;
           }
 
+          document.getElementById("btnStart").disabled = true;                  // Stop user from double clicking the button
           var display = document.getElementById("display");
 
           timer = setInterval(function(){
                   secondsCounter--;
-                  var displayTime = new Date(secondsCounter * 1000).toISOString().slice(11,19);
+
+              var displayTime = new Date(secondsCounter * 1000).toISOString().slice(11,19);
                   display.innerHTML = displayTime;
-  
+
                   if(secondsCounter == 0){
-                      console.log('d')
                       beep();
                       document.getElementById("btnStart").disabled = false;
-                      clearInterval(timer)
+                      clearInterval(timer);
                   }
           }, 1000)
 
@@ -128,9 +126,7 @@
           clearInterval(timer)
           display.innerHTML ='00:00:00'
           document.getElementById("btnStart").disabled = false;
-          // seconds = minute * 60
       }
 
-  </script>
-
+    </script>
 </html>
