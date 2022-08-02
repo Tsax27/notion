@@ -51,10 +51,10 @@
         .buttons button:last-child {
             margin-right: 0;
         }
-        .buttons button:nth-child(3){
+        .buttons button:nth-child(4){
             background-color: #8bc34a;
         }
-        .buttons button:nth-child(4){
+        .buttons button:nth-child(5){
             background-color: rgb(201, 89, 69);
         }
     </style>
@@ -62,15 +62,15 @@
 
 <body>
   <section class="section">
-    <div id="display">0:00:00</div>
+    <div id="display">00:00:00</div>
   
     <div class="buttons">
       <input type="text" id="inHrs" name="inHrs" placeholder="hrs">
       <input type="text" id="inMins" name="inMins" placeholder="mins">
       <input type="text" id="inSecs" name="inSecs" placeholder="secs">
 
-      <button onclick="start()">▶</button>
-      <button onclick="cancel()">∎</button>
+      <button id="btnStart" onclick="start()">▶</button>
+      <button id="btnCancel" onclick="cancel()">∎</button>
     </div>
     
   </section>
@@ -83,6 +83,8 @@
       var timer;
 
       function start(){
+          document.getElementById("btnStart").disabled = true;                  // Stop user from double clicking the button
+
           var inHrs = document.getElementById("inHrs").value;
           var inMins = document.getElementById("inMins").value;
           var inSecs = document.getElementById("inSecs").value;
@@ -106,28 +108,12 @@
           }
 
           var display = document.getElementById("display");
-//          display.innerHTML = ('0'+hours).slice(-2) + ':' + ('0'+minute).slice(-2) + ':' + ('0'+seconds1).slice(-2)
-
-//          var statSec = seconds1
 
           timer = setInterval(function(){
                   secondsCounter--;
                   var displayTime = new Date(secondsCounter * 1000).toISOString().slice(11,19);
                   display.innerHTML = displayTime;
-                  /*
-                  if(statSec != 0)
-                      statSec--
-                  else
-                      statSec = 59
-
-                  if(statSec < 10)
-                      textSec = '0' + statSec
-                  else 
-                      textSec = statSec
-
-                  display.innerHTML = Math.floor(secondsCounter/60) + ':' + textSec
-                  */
-            
+  
                   if(secondsCounter == 0){
                       console.log('d')
                       beep();
@@ -140,6 +126,7 @@
       function cancel(){
           clearInterval(timer)
           display.innerHTML ='00:00:00'
+          document.getElementById("btnStart").disabled = false;
           // seconds = minute * 60
       }
 
